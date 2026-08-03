@@ -7,6 +7,7 @@ import {
   Users,
   type LucideIcon,
 } from "lucide-react";
+import Reveal from "@/components/Reveal";
 
 type Feature = {
   icon: LucideIcon;
@@ -68,21 +69,20 @@ export default function Features() {
         </div>
 
         <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {features.map((feature) => (
-            <div
-              key={feature.title}
-              className="rounded-2xl border border-border bg-muted/40 p-6 transition-colors hover:bg-muted"
-            >
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
-                <feature.icon className="h-5 w-5 text-primary" aria-hidden="true" />
+          {features.map((feature, index) => (
+            <Reveal key={feature.title} delay={(index % 3) * 0.08}>
+              <div className="rounded-2xl border border-border bg-muted/40 p-6 transition-colors hover:bg-muted">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
+                  <feature.icon className="h-5 w-5 text-primary" aria-hidden="true" />
+                </div>
+                <h3 className="mt-5 font-display text-lg font-semibold">
+                  {feature.title}
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-foreground/70">
+                  {feature.description}
+                </p>
               </div>
-              <h3 className="mt-5 font-display text-lg font-semibold">
-                {feature.title}
-              </h3>
-              <p className="mt-2 text-sm leading-6 text-foreground/70">
-                {feature.description}
-              </p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>

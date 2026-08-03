@@ -1,4 +1,5 @@
 import { MessageSquareText, Sparkles, PackageCheck } from "lucide-react";
+import Reveal from "@/components/Reveal";
 
 const steps = [
   {
@@ -37,19 +38,21 @@ export default function HowItWorks() {
 
         <ol className="mt-14 grid grid-cols-1 gap-8 sm:grid-cols-3">
           {steps.map((step, index) => (
-            <li key={step.title} className="relative rounded-2xl bg-background p-6">
-              <span className="font-display text-sm font-semibold text-primary">
-                Step {index + 1}
-              </span>
-              <div className="mt-4 flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
-                <step.icon className="h-5 w-5 text-primary" aria-hidden="true" />
-              </div>
-              <h3 className="mt-5 font-display text-lg font-semibold">
-                {step.title}
-              </h3>
-              <p className="mt-2 text-sm leading-6 text-foreground/70">
-                {step.description}
-              </p>
+            <li key={step.title}>
+              <Reveal delay={index * 0.12} className="relative rounded-2xl bg-background p-6">
+                <span className="font-display text-sm font-semibold text-primary">
+                  Step {index + 1}
+                </span>
+                <div className="mt-4 flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
+                  <step.icon className="h-5 w-5 text-primary" aria-hidden="true" />
+                </div>
+                <h3 className="mt-5 font-display text-lg font-semibold">
+                  {step.title}
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-foreground/70">
+                  {step.description}
+                </p>
+              </Reveal>
             </li>
           ))}
         </ol>

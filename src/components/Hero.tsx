@@ -1,4 +1,24 @@
+"use client";
+
 import { ArrowRight, Play, Sparkles } from "lucide-react";
+import dynamic from "next/dynamic";
+import CanvasErrorBoundary from "@/components/three/CanvasErrorBoundary";
+import type { AssetVariant } from "@/components/three/AssetPreviewScene";
+
+const HeroScene = dynamic(() => import("@/components/three/HeroScene"), {
+  ssr: false,
+});
+const AssetPreviewScene = dynamic(
+  () => import("@/components/three/AssetPreviewScene"),
+  { ssr: false }
+);
+
+const previewAssets: { label: string; variant: AssetVariant }[] = [
+  { label: "Blade Runner Alley", variant: "alley" },
+  { label: "Stylized Oak", variant: "oak" },
+  { label: "Sci-Fi Drone", variant: "drone" },
+  { label: "Fantasy Sword", variant: "sword" },
+];
 
 export default function Hero() {
   return (
@@ -54,20 +74,39 @@ export default function Hero() {
         </p>
       </div>
 
-      <div className="mx-auto mt-16 max-w-5xl">
+      <div
+        className="relative mx-auto mt-12 h-72 max-w-3xl sm:h-96"
+        aria-label="Interactive 3D preview of an AI-generated asset"
+        role="img"
+      >
+        <CanvasErrorBoundary
+          fallback={
+            <div className="h-full w-full rounded-3xl bg-gradient-to-br from-primary/25 via-secondary/15 to-accent/25" />
+          }
+        >
+          <HeroScene />
+        </CanvasErrorBoundary>
+      </div>
+
+      <div className="mx-auto mt-10 max-w-5xl">
         <div className="grid grid-cols-2 gap-3 rounded-3xl border border-border bg-muted/60 p-3 sm:grid-cols-4">
-          {["Blade Runner Alley", "Stylized Oak", "Sci-Fi Drone", "Fantasy Sword"].map(
-            (label) => (
-              <div
-                key={label}
-                className="flex aspect-square flex-col justify-end rounded-2xl bg-gradient-to-br from-primary/25 via-secondary/15 to-accent/25 p-4"
-              >
-                <span className="font-display text-sm font-medium text-foreground/90">
+          {previewAssets.map(({ label, variant }) => (
+            <div
+              key={label}
+              className="relative aspect-square overflow-hidden rounded-2xl bg-gradient-to-br from-primary/25 via-secondary/15 to-accent/25"
+            >
+              <div className="pointer-events-none absolute inset-0">
+                <CanvasErrorBoundary fallback={<div className="h-full w-full" />}>
+                  <AssetPreviewScene variant={variant} />
+                </CanvasErrorBoundary>
+              </div>
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/50 to-transparent p-4 pt-8">
+                <span className="font-display text-sm font-medium text-white">
                   {label}
                 </span>
               </div>
-            )
-          )}
+            </div>
+          ))}
         </div>
       </div>
     </section>

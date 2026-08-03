@@ -1,4 +1,5 @@
 import { Check } from "lucide-react";
+import Reveal from "@/components/Reveal";
 
 type Plan = {
   name: string;
@@ -68,9 +69,10 @@ export default function Pricing() {
         </div>
 
         <div className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-3">
-          {plans.map((plan) => (
-            <div
+          {plans.map((plan, index) => (
+            <Reveal
               key={plan.name}
+              delay={index * 0.1}
               className={`relative rounded-2xl border p-8 ${
                 plan.highlighted
                   ? "border-primary bg-primary/5 shadow-lg shadow-primary/20"
@@ -110,7 +112,7 @@ export default function Pricing() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
